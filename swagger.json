@@ -1,0 +1,411 @@
+{
+  "swagger": "2.0",
+  "info": 
+  {
+    "version": "0.1.0",
+    "title": "emergency-contacts"
+  },
+  "basePath": "/",
+  "schemes": 
+  [
+    "https"
+  ],
+  "consumes": 
+  [
+    "application/json"
+  ],
+  "produces": 
+  [
+    "application/json"
+  ],
+  "paths": 
+  {
+    "/contacts": 
+    {
+      "x-swagger-router-controller": "contactapp",
+      "get": 
+      {
+        "description": "Returns all contacts entries to the caller",
+        "operationId": "getContactList",
+        "responses": 
+        {
+          "200": 
+          {
+            "description": "Successful response",
+            "schema": 
+            {
+              "title": "ArrayOfContacts",
+              "type": "array",
+              "items": 
+              {
+                "$ref": "#/definitions/contact"
+              }
+            }
+          },
+          "400": 
+          {
+            "description": "Error in request",
+            "schema": 
+            {
+              "type": "string"
+            }
+          },
+          "500": 
+          {
+            "description": "An error occurred in the server",
+            "schema": 
+            {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "post": 
+      {
+        "description": "Adds a contact",
+        "operationId": "addContact",
+        "parameters": 
+        [
+          {
+            "name": "contact",
+            "in": "body",
+            "description": "The contact to be added",
+            "schema": 
+            {
+              "items": 
+              {
+                "$ref": "#/definitions/contactBase"
+              }
+            }
+          }
+        ],
+        "responses": 
+        {
+          "201": 
+          {
+            "description": "Successfully added",
+            "schema": 
+            {
+              "$ref": "#/definitions/contact"
+            }
+          },
+          "400": 
+          {
+            "description": "Error in request",
+            "schema": 
+            {
+              "type": "string"
+            }
+          },
+          "500": 
+          {
+            "description": "An error occurred in the server",
+            "schema": 
+            {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/contacts/{byuId}": 
+    {
+      "x-swagger-router-controller": "contactapp",
+      "get": 
+      {
+        "description": "Returns all contacts entries to the caller",
+        "operationId": "getAffiliateContactList",
+        "parameters": 
+        [
+          {
+            "name": "byuId",
+            "in": "path",
+            "description": "The ByuID of the afflicate",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": 
+        {
+          "200": 
+          {
+            "description": "Successful response",
+            "schema": 
+            {
+              "title": "ArrayOfContacts",
+              "type": "array",
+              "items": 
+              {
+                "$ref": "#/definitions/contact"
+              }
+            }
+          },
+          "400": 
+          {
+            "description": "Error in request",
+            "schema": 
+            {
+              "type": "string"
+            }
+          },
+          "500": 
+          {
+            "description": "An error occurred in the server",
+            "schema": 
+            {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/contact/{contactId}": 
+    {
+      "x-swagger-router-controller": "contactapp",
+      "get": 
+      {
+        "description": "Gets the specified contact",
+        "operationId": "getContact",
+        "parameters": 
+        [
+          {
+            "name": "contactId",
+            "in": "path",
+            "description": "The id of the contact to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": 
+        {
+          "200": 
+          {
+            "description": "Successfully retrieved",
+            "schema": 
+            {
+              "$ref": "#/definitions/contact"
+            }
+          },
+          "400": 
+          {
+            "description": "Error in request",
+            "schema": 
+            {
+              "type": "string"
+            }
+          },
+          "500": 
+          {
+            "description": "An error occurred in the server",
+            "schema": 
+            {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "put": 
+      {
+        "description": "Modifies an existing contact",
+        "operationId": "updateContact",
+        "parameters": 
+        [
+          {
+            "name": "contactId",
+            "in": "path",
+            "description": "The id of the contact to be modified",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "contact",
+            "in": "body",
+            "description": "the modified contact to be updated",
+            "schema": 
+            {
+              "$ref": "#/definitions/contactBase"
+            }
+          }
+        ],
+        "responses": 
+        {
+          "201": 
+          {
+            "description": "Successfully added",
+            "schema": 
+            {
+              "$ref": "#/definitions/contact"
+            }
+          },
+          "400": 
+          {
+            "description": "Error in request",
+            "schema": 
+            {
+              "type": "string"
+            }
+          },
+          "500": 
+          {
+            "description": "An error occurred in the server",
+            "schema": 
+            {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "delete": 
+      {
+        "description": "Deletes the specified contact",
+        "operationId": "deleteContact",
+        "parameters": 
+        [
+          {
+            "name": "contactId",
+            "in": "path",
+            "description": "The id of the contact to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": 
+        {
+          "204": 
+          {
+            "description": "Successfully deleted",
+            "schema": 
+            {
+              "$ref": "#/definitions/contact"
+            }
+          },
+          "400": 
+          {
+            "description": "Error in request",
+            "schema": 
+            {
+              "type": "string"
+            }
+          },
+          "500": 
+          {
+            "description": "An error occurred in the server",
+            "schema": 
+            {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": 
+  {
+    "contactBase": 
+    {
+      "required": 
+      [
+        "contactId",
+        "contactName",
+        "country",
+        "countryPhonePrefix",
+        "phoneNumber",
+        "email",
+        "relationship",
+        "byu_id_of_affiliate"
+      ],
+      "properties": 
+      {
+        "contactId": 
+        {
+          "type": "string"
+        },
+        "contactName": 
+        {
+          "type": "string"
+        },
+        "country": 
+        {
+          "type": "string"
+        },
+        "countryPhonePrefix": 
+        {
+          "type": "string"
+        },
+        "phoneNumber": 
+        {
+          "type": "string"
+        },
+        "email": 
+        {
+          "type": "string"
+        },
+        "relationship": 
+        {
+          "type": "string"
+        },
+        "byu_id_of_affliliate": 
+        {
+          "type": "string"
+        }
+      }
+    },
+    "contact": 
+    {
+      "allOf": 
+      [
+        {
+          "$ref": "#/definitions/contactBase"
+        },
+        {
+          "required": 
+          [
+            "contactId",
+            "contactName",
+            "country",
+            "countryPhonePrefix",
+            "phoneNumber",
+            "email",
+            "relationship",
+            "byu_id_of_affiliate"
+          ],
+          "properties": 
+          {
+            "contactId": 
+            {
+              "type": "string"
+            },
+            "contactName": 
+            {
+              "type": "string"
+            },
+            "country": 
+            {
+              "type": "string"
+            },
+            "countryPhonePrefix": 
+            {
+              "type": "string"
+            },
+            "phoneNumber": 
+            {
+              "type": "string"
+            },
+            "email": 
+            {
+              "type": "string"
+            },
+            "relationship": 
+            {
+              "type": "string"
+            },
+            "byu_id_of_affliliate": 
+            {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
